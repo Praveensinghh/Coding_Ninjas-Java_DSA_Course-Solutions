@@ -45,13 +45,19 @@ Sample Output 2:
 30 20 10 
 */
 
-import java.util.LinkedList;
 import java.util.Queue;
 
 public class ReverseQueue {
 
     public static void reverseQueue(Queue<Integer> input) {
         // Your code goes here
-        
+
+        if (input.size() <= 1) {
+            return;
+        }
+
+        int front = input.remove();
+        reverseQueue(input);
+        input.add(front);
     }
 }

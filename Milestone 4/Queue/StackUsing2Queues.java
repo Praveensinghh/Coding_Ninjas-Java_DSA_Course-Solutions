@@ -76,34 +76,88 @@ true
 false
 */
 
+import java.util.Queue;
+import java.util.LinkedList;
+
 public class StackUsing2Queues {
 
     // Define the data members
+    private Queue<Integer> q1;
+    private Queue<Integer> q2;
 
+    /*----------------- Constructor -----------------*/
     public StackUsing2Queues() {
         // Implement the Constructor
-
+        q1 = new LinkedList<>();
+        q2 = new LinkedList<>();
     }
 
     /*----------------- Public Functions of Stack -----------------*/
 
     public int getSize() {
         // Implement the getSize() function
+        return q1.size() + q2.size();
+
     }
 
     public boolean isEmpty() {
         // Implement the isEmpty() function
+
+        if (q1.isEmpty() && q2.isEmpty()) {
+            return true;
+        }
+        return false;
     }
 
     public void push(int element) {
         // Implement the push(element) function
+
+        if (q1.isEmpty() && q2.isEmpty()) {
+            q1.add(element);
+        } else if (!q1.isEmpty()) {
+            q1.add(element);
+        } else {
+            q2.add(element);
+        }
     }
 
     public int pop() {
         // Implement the pop() function
+
+        if (q1.isEmpty() && q2.isEmpty()) {
+            return -1;
+        } else if (!q1.isEmpty()) {
+            while (q1.size() > 1) {
+                q2.add(q1.remove());
+            }
+            return q1.remove();
+        } else {
+            while (q2.size() > 1) {
+                q1.add(q2.remove());
+            }
+            return q2.remove();
+        }
     }
 
     public int top() {
         // Implement the top() function
+
+        if (q1.isEmpty() && q2.isEmpty()) {
+            return -1;
+        } else if (!q1.isEmpty()) {
+            while (q1.size() > 1) {
+                q2.add(q1.remove());
+            }
+            int temp = q1.remove();
+            q2.add(temp);
+            return temp;
+        } else {
+            while (q2.size() > 1) {
+                q1.add(q2.remove());
+            }
+            int temp = q2.remove();
+            q1.add(temp);
+            return temp;
+        }
     }
 }
