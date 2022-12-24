@@ -29,11 +29,14 @@ https://www.codingninjas.com/courses/online-java-course
 
 ## Milestones
 
-Introduction to Java Programming Languafe
+Introduction to Java Programming Language
+
 1. Milestone-1
 2. Milestone-2
 
+
 Introduction to Data Structures
+
 3. Milestone-3
 4. Milestone-4
 5. Milestone-5
