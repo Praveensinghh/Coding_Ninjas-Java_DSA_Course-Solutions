@@ -47,5 +47,28 @@ public class NodeHavingSumOfChildrenAndNodeIsMax {
         if (root == null) {
             return null;
         }
+
+        int maxSum = root.data;
+        TreeNode<Integer> maxSumNode = root;
+
+        for (TreeNode<Integer> child : root.children) {
+            maxSum += child.data;
+        }
+
+        for (TreeNode<Integer> child : root.children) {
+            TreeNode<Integer> maxSumNodeFromChild = maxSumNode(child);
+            int maxSumFromChild = maxSumNodeFromChild.data;
+
+            for (TreeNode<Integer> grandChild : maxSumNodeFromChild.children) {
+                maxSumFromChild += grandChild.data;
+            }
+
+            if (maxSumFromChild > maxSum) {
+                maxSum = maxSumFromChild;
+                maxSumNode = maxSumNodeFromChild;
+            }
+        }
+
+        return maxSumNode;
     }
 }
