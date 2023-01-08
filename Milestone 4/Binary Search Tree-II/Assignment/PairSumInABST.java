@@ -23,6 +23,8 @@ Sample Output 1:
 5 7
 */
 
+import java.util.ArrayList;
+
 class BinaryTreeNode<T> {
     T data;
     BinaryTreeNode<T> left;
@@ -33,7 +35,7 @@ class BinaryTreeNode<T> {
     }
 }
 
-public class PairSumInABST {
+public class Solution {
     /*
      * BinaryTreeNode class
      * 
@@ -49,8 +51,35 @@ public class PairSumInABST {
      * }
      */
 
+    private static void convertBSTToArray(BinaryTreeNode<Integer> root, ArrayList<Integer> array) {
+        if (root == null) {
+            return;
+        }
+
+        convertBSTToArray(root.left, array);
+        array.add(root.data);
+        convertBSTToArray(root.right, array);
+    }
+
     public static void printNodesSumToS(BinaryTreeNode<Integer> root, int s) {
         // Write your code here
-        
+        ArrayList<Integer> array = new ArrayList<>();
+        convertBSTToArray(root, array);
+
+        int i = 0;
+        int j = array.size() - 1;
+
+        while (i < j) {
+            int sum = array.get(i) + array.get(j);
+            if (sum == s) {
+                System.out.println(array.get(i) + " " + array.get(j));
+                i++;
+                j--;
+            } else if (sum < s) {
+                i++;
+            } else {
+                j--;
+            }
+        }
     }
 }

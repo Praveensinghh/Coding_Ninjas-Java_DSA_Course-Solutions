@@ -71,11 +71,24 @@ class BinaryTreeNode<T> {
     }
 }
 
-public class PathSumRootToLeaf {
+public class Solution {
+
+    public static void rootToLeafPathsSumToK(BinaryTreeNode<Integer> root, int k, String path) {
+        if (root == null) {
+            return;
+        }
+        if (root.left == null && root.right == null) {
+            if (root.data == k) {
+                System.out.println(path + root.data);
+            }
+            return;
+        }
+        rootToLeafPathsSumToK(root.left, k - root.data, path + root.data + " ");
+        rootToLeafPathsSumToK(root.right, k - root.data, path + root.data + " ");
+    }
 
     public static void rootToLeafPathsSumToK(BinaryTreeNode<Integer> root, int k) {
         // Your code goes here
-        
-
+        rootToLeafPathsSumToK(root, k, "");
     }
 }
