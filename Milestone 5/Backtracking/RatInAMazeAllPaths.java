@@ -55,37 +55,33 @@ Sample Output 2 Explanation :
 
 public class Solution {
 
-    private static boolean isSafe(int maze[][], int x, int y) {
-        if (x >= 0 && x < maze.length && y >= 0 && y < maze.length && maze[x][y] == 1) {
+    private static boolean isSafe(int maze[][], int x, int y, int n) {
+        if (x >= 0 && x < n && y >= 0 && y < n && maze[x][y] == 1) {
             return true;
         }
         return false;
     }
 
-    private static void ratInAMaze(int maze[][], int x, int y, int solution[][]) {
-
-        if (isSafe(maze, x, y)) {
-            return;
-        }
-
-        if (x == maze.length - 1 && y == maze.length - 1 && maze[x][y] == 1) {
-            solution[x][y] = 1;
-            for (int i = 0; i < solution.length; i++) {
-                for (int j = 0; j < solution.length; j++) {
-                    System.out.print(solution[i][j] + " ");
+    private static void ratInAMazeUtil(int maze[][], int n, int x, int y, int visited[][]) {
+        if (x == n - 1 && y == n - 1) {
+            visited[x][y] = 1;
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    System.out.print(visited[i][j] + " ");
                 }
-                System.out.println();
             }
-            solution[x][y] = 0;
+            System.out.println();
+            visited[x][y] = 0;
             return;
         }
-
-        solution[x][y] = 1;
-        ratInAMaze(maze, x + 1, y, solution);
-        ratInAMaze(maze, x, y + 1, solution);
-        ratInAMaze(maze, x - 1, y, solution);
-        ratInAMaze(maze, x, y - 1, solution);
-        solution[x][y] = 0;
+        if (isSafe(maze, x, y, n)) {
+            visited[x][y] = 1;
+            ratInAMazeUtil(maze, n, x + 1, y, visited);
+            ratInAMazeUtil(maze, n, x - 1, y, visited);
+            ratInAMazeUtil(maze, n, x, y + 1, visited);
+            ratInAMazeUtil(maze, n, x, y - 1, visited);
+            visited[x][y] = 0;
+        }
     }
 
     static void ratInAMaze(int maze[][], int n) {
@@ -93,8 +89,7 @@ public class Solution {
          * Your class should be named Solution.
          * Write your code here
          */
-
-        int solution[][] = new int[n][n];
-        ratInAMaze(maze, 0, 0, solution);
+        int visited[][] = new int[n][n];
+        ratInAMazeUtil(maze, n, 0, 0, visited);
     }
 }

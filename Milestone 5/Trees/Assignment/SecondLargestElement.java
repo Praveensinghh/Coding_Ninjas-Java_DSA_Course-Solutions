@@ -26,7 +26,7 @@ class TreeNode<T> {
     }
 }
 
-public class SecondLargestElement {
+public class Solution {
 
     /*
      * TreeNode structure
@@ -44,5 +44,6 @@ public class SecondLargestElement {
 
     public static TreeNode<Integer> findSecondLargest(TreeNode<Integer> root) {
         // Write your code here
+        
     }
 }

@@ -33,7 +33,7 @@ class TreeNode<T> {
     }
 }
 
-public class NextLargestElement {
+public class Solution {
 
     /*
      * TreeNode structure
@@ -49,37 +49,35 @@ public class NextLargestElement {
      * }
      */
 
-    public static TreeNode<Integer> findNextLargerNode(TreeNode<Integer> root, int n) {
-        // Write your code here
+    private static TreeNode<Integer> findNextLargestNode(TreeNode<Integer> root, int n, int nextLargerElement) {
 
         if (root == null) {
             return null;
         }
 
-        if (root.data > n) {
-            return root;
+        if (root.data > n && root.data < nextLargerElement) {
+            nextLargerElement = root.data;
         }
-
-        TreeNode<Integer> ans = null;
 
         for (int i = 0; i < root.children.size(); i++) {
             TreeNode<Integer> child = root.children.get(i);
-            TreeNode<Integer> temp = findNextLargerNode(child, n);
-
-            if (temp != null) {
-                if (ans == null) {
-                    ans = temp;
-                } else {
-                    if (temp.data < ans.data) {
-                        ans = temp;
-                    }
-                }
-
+            TreeNode<Integer> nextLargestNode = findNextLargestNode(child, n, nextLargerElement);
+            if (nextLargestNode != null && nextLargestNode.data < nextLargerElement) {
+                nextLargerElement = nextLargestNode.data;
             }
-
         }
 
-        return ans;
+        if (nextLargerElement == Integer.MAX_VALUE) {
+            return null;
+        }
+
+        TreeNode<Integer> nextLargestNode = new TreeNode<Integer>(nextLargerElement);
+        return nextLargestNode;
     }
 
+    public static TreeNode<Integer> findNextLargerNode(TreeNode<Integer> root, int n) {
+        // Write your code here
+
+        return findNextLargestNode(root, n, Integer.MAX_VALUE);
+    }
 }
