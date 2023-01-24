@@ -31,15 +31,40 @@ import java.util.*;
 
 public class Solution {
 
-    int solve(String[] board , int n, int m)
-	{
-		/* Your class should be named Solution
-		 * Don't write main().
-		 * Don't read input, it is passed as function argument.
-		 * Return output and don't print it.
-	 	 * Taking input and printing output is handled automatically.
-        */
-	}
-	
-	
+    private static boolean dfs(String[] board, int[][] visited, int i, int j, int n, int m, char c, int pi, int pj) {
+        if (i < 0 || i >= n || j < 0 || j >= m || board[i].charAt(j) != c || visited[i][j] == 1) {
+            return false;
+        }
+        if (visited[i][j] == 2) {
+            return true;
+        }
+        visited[i][j] = 1;
+        if (dfs(board, visited, i + 1, j, n, m, c, i, j) || dfs(board, visited, i - 1, j, n, m, c, i, j)
+                || dfs(board, visited, i, j + 1, n, m, c, i, j) || dfs(board, visited, i, j - 1, n, m, c, i, j)) {
+            return true;
+        }
+        visited[i][j] = 2;
+        return false;
+    }
+
+    int solve(String[] board, int n, int m) {
+        /*
+         * Your class should be named Solution
+         * Don't write main().
+         * Don't read input, it is passed as function argument.
+         * Return output and don't print it.
+         * Taking input and printing output is handled automatically.
+         */
+        int[][] visited = new int[n][m];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (visited[i][j] == 0) {
+                    if (dfs(board, visited, i, j, n, m, board[i].charAt(j), -1, -1)) {
+                        return 1;
+                    }
+                }
+            }
+        }
+        return 0;
+    }
 }
