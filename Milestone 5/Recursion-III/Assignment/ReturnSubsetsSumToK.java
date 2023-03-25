@@ -23,9 +23,40 @@ Sample Output :
 
 public class solution {
 
+    public static int[][] subsetsSumK(int input[], int k, int start) {
+        if (start == input.length) {
+            if (k == 0) {
+                int[][] ans = new int[1][0];
+                return ans;
+            } else {
+                int[][] ans = new int[0][0];
+                return ans;
+            }
+        }
+        int[][] smallAns1 = subsetsSumK(input, k, start + 1);
+        int[][] smallAns2 = subsetsSumK(input, k - input[start], start + 1);
+        int[][] ans = new int[smallAns1.length + smallAns2.length][];
+        int i = 0;
+        for (; i < smallAns1.length; i++) {
+            ans[i] = new int[smallAns1[i].length];
+            for (int j = 0; j < smallAns1[i].length; j++) {
+                ans[i][j] = smallAns1[i][j];
+            }
+        }
+        for (int j = 0; j < smallAns2.length; j++) {
+            ans[i] = new int[smallAns2[j].length + 1];
+            ans[i][0] = input[start];
+            for (int l = 1; l < ans[i].length; l++) {
+                ans[i][l] = smallAns2[j][l - 1];
+            }
+            i++;
+        }
+        return ans;
+    }
+
     // Return a 2D array that contains all the subsets which sum to k
     public static int[][] subsetsSumK(int input[], int k) {
         // Write your code here
-        
+        return subsetsSumK(input, k, 0);
     }
 }

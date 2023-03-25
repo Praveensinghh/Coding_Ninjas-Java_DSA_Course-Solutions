@@ -30,7 +30,7 @@ Explanation of Sample Input 2:
 Neither their exists a pair which forms a palindrome, nor any of the words is a palindrome in itself. Hence, the output is 'false.'
 */
 
-import java.util.ArrayList;
+import java.util.*;
 
 class TrieNode {
     char data;
@@ -121,8 +121,56 @@ public class Trie {
 
     /* ..................... Palindrome Pair................... */
 
-    public boolean isPalindromePair(ArrayList<String> words) {
-        // Your code goes here
-        
+    private boolean isPalindrome(String str) {
+        int start = 0, end = str.length() - 1;
+        while (start < end) {
+            if (str.charAt(start) != str.charAt(end)) {
+                return false;
+            }
+            start++;
+            end--;
+        }
+        return true;
     }
+
+    private boolean isPalindromePair(TrieNode root, String word) {
+        if (word.length() == 0) {
+            return root.isTerminating;
+        }
+
+        if (root.isTerminating && isPalindrome(word)) {
+            return true;
+        }
+
+        int childIndex = word.charAt(0) - 'a';
+        TrieNode child = root.children[childIndex];
+
+        if (child == null) {
+            return false;
+        }
+
+        return isPalindromePair(child, word.substring(1));
+    }
+
+    public boolean isPalindromePair(ArrayList<String> words) {
+        // Build a Trie with reverse of each word
+        Trie reverseTrie = new Trie();
+        for (String word : words) {
+            String reverseWord = new StringBuilder(word).reverse().toString();
+            reverseTrie.add(reverseWord);
+        }
+
+        // Check if any word in the list is a palindrome or a pair of words can be
+        // joined to form a palindrome
+        for (String word : words) {
+            if (reverseTrie.search(word)) {
+                return true; // word itself is a palindrome
+            }
+            if (isPalindromePair(reverseTrie.root, word)) {
+                return true; // pair of words can be joined to form a palindrome
+            }
+        }
+        return false;
+    }
+
 }

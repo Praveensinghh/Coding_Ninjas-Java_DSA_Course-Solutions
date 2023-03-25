@@ -29,11 +29,32 @@ Sample Output 2 :
 6
 */
 
-import java.util.HashMap;
+import java.util.*;
 
-public class PairDifferenceWithK {
+public class Solution {
     public static int getPairsWithDifferenceK(int arr[], int k) {
         // Write your code here
-        
+        Map<Integer, Integer> freq = new HashMap<>();
+        for (int num : arr) {
+            freq.put(num, freq.getOrDefault(num, 0) + 1);
+        }
+
+        int count = 0;
+        if (k == 0) {
+            for (int num : freq.keySet()) {
+                int f = freq.get(num);
+                if (f >= 2) {
+                    count += f * (f - 1) / 2; // n choose 2
+                }
+            }
+        } else {
+            for (int num : freq.keySet()) {
+                if (freq.containsKey(num + k)) {
+                    count += freq.get(num) * freq.get(num + k);
+                }
+            }
+        }
+
+        return count;
     }
 }
