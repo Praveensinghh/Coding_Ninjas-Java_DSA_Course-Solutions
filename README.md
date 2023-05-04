@@ -40,3 +40,10 @@ Introduction to Data Structures
 3. Milestone-3
 4. Milestone-4
 5. Milestone-5
+
+## Skill Test
+
+1. Test-1
+2. Test-2
+3. Test-3
+4. Test-4

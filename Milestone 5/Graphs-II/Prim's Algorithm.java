@@ -36,75 +36,45 @@ Sample Output 1 :
 import java.util.*;
 
 public class Solution {
-    static class Edge {
-        int v1;
-        int v2;
-        int w;
-
-        Edge(int v1, int v2, int w) {
-            this.v1 = v1;
-            this.v2 = v2;
-            this.w = w;
-        }
-    }
-
     public static void main(String[] args) {
-        /*
-         * Write Your Code Here
-         * Complete the Rest of the Program
-         * You have to take input and print the output yourself
-         */
-        Scanner s = new Scanner(System.in);
-        int V = s.nextInt();
-        int E = s.nextInt();
-
-        List<List<Edge>> graph = new ArrayList<>();
-
-        for (int i = 0; i < V; i++) {
-            graph.add(new ArrayList<>());
+        Scanner sc = new Scanner(System.in);
+        int v = sc.nextInt();
+        int e = sc.nextInt();
+        int[][] graph = new int[v][v];
+        for (int i = 0; i < e; i++) {
+            int a = sc.nextInt();
+            int b = sc.nextInt();
+            graph[a][b] = 1;
+            graph[b][a] = 1;
         }
-
-        for (int i = 0; i < E; i++) {
-            int v1 = s.nextInt();
-            int v2 = s.nextInt();
-            int w = s.nextInt();
-
-            graph.get(v1).add(new Edge(v1, v2, w));
-            graph.get(v2).add(new Edge(v2, v1, w));
-        }
-
-        boolean visited[] = new boolean[V];
-
-        PriorityQueue<Edge> pq = new PriorityQueue<>((e1, e2) -> e1.w - e2.w);
-
-        visited[0] = true;
-        for (Edge e : graph.get(0)) {
-            pq.add(e);
-        }
-
-        List<Edge> mst = new ArrayList<>();
-
-        while (!pq.isEmpty()) {
-            Edge e = pq.poll();
-
-            if (visited[e.v2]) {
-                continue;
+        int start = sc.nextInt();
+        int end = sc.nextInt();
+        boolean[] visited = new boolean[v];
+        int[] parent = new int[v];
+        Arrays.fill(parent, -1);
+        Queue<Integer> q = new LinkedList<>();
+        q.add(start);
+        visited[start] = true;
+        boolean isPathFound = false;
+        while (!q.isEmpty()) {
+            int curr = q.poll();
+            if (curr == end) {
+                isPathFound = true;
+                break;
             }
-
-            visited[e.v2] = true;
-            mst.add(e);
-
-            for (Edge ne : graph.get(e.v2)) {
-                if (!visited[ne.v2]) {
-                    pq.add(ne);
+            for (int i = 0; i < v; i++) {
+                if (!visited[i] && graph[curr][i] == 1) {
+                    q.add(i);
+                    visited[i] = true;
+                    parent[i] = curr;
                 }
             }
         }
-        for (Edge e : mst) {
-            if (e.v1 < e.v2) {
-                System.out.println(e.v1 + " " + e.v2 + " " + e.w);
-            } else {
-                System.out.println(e.v2 + " " + e.v1 + " " + e.w);
+        if (isPathFound) {
+            int curr = end;
+            while (curr != -1) {
+                System.out.print(curr + " ");
+                curr = parent[curr];
             }
         }
     }
