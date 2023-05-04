@@ -35,9 +35,6 @@ Sample Output 2:
 
 public class Solution {
 
-
- 
-
     public static int findMaxSquareWithAllZeros(int[][] input) {
 
         /*
@@ -47,6 +44,6 @@ public class Solution {
          * Return output and don't print it.
          * Taking input and printing output is handled automatically.
          */
-        
+
     }
 }

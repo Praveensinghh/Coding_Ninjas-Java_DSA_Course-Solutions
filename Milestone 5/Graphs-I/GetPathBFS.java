@@ -71,14 +71,14 @@ public class Solution {
         visited[v1] = true;
         while (!q.isEmpty()) {
             int curr = q.remove();
+            if (curr == v2) {
+                break;
+            }
             for (int i = 0; i < n; i++) {
                 if (graph[curr][i] && !visited[i]) {
                     q.add(i);
                     visited[i] = true;
                     parent[i] = curr;
-                    if (i == v2) {
-                        break;
-                    }
                 }
             }
         }
@@ -93,7 +93,6 @@ public class Solution {
         path.add(v1);
         return path;
     }
-
     public static void main(String[] args) throws NumberFormatException, IOException {
         /*
          * Write Your Code Here

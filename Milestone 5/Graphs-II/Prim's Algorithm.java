@@ -74,16 +74,38 @@ public class Solution {
         }
 
         boolean visited[] = new boolean[V];
-        PriorityQueue<Edge> pq = new PriorityQueue<>((e1, e2) -> e1.w - e2.w);
-        visited[0] = true;
 
+        PriorityQueue<Edge> pq = new PriorityQueue<>((e1, e2) -> e1.w - e2.w);
+
+        visited[0] = true;
         for (Edge e : graph.get(0)) {
             pq.add(e);
         }
 
+        List<Edge> mst = new ArrayList<>();
+
         while (!pq.isEmpty()) {
             Edge e = pq.poll();
-                
+
+            if (visited[e.v2]) {
+                continue;
+            }
+
+            visited[e.v2] = true;
+            mst.add(e);
+
+            for (Edge ne : graph.get(e.v2)) {
+                if (!visited[ne.v2]) {
+                    pq.add(ne);
+                }
+            }
+        }
+        for (Edge e : mst) {
+            if (e.v1 < e.v2) {
+                System.out.println(e.v1 + " " + e.v2 + " " + e.w);
+            } else {
+                System.out.println(e.v2 + " " + e.v1 + " " + e.w);
+            }
         }
     }
 }
